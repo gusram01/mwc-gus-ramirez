@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { GetUserUseCase } from '../../domain/usecases/GetUserUseCase';
+import { DeleteUserUseCase } from '../../domain/usecases/DeleteUserUseCase';
 
-export class GetUserController {
-  constructor(private useCase: GetUserUseCase) {}
+export class DeleteUserController {
+  constructor(private useCase: DeleteUserUseCase) {}
 
   async execute(req: Request, res: Response) {
     const response = await this.useCase.execute(req.params.id);

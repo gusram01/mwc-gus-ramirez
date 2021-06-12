@@ -4,7 +4,7 @@ import { IUserRepository } from '../../domain/IUserRepository';
 
 export abstract class RepositoryAdapter implements IUserRepository {
   abstract create(user: User): Promise<IResponse<any>>;
-  abstract getUserById(id: string): Promise<IResponse<User>>;
-  abstract updateById(id: string, user: Partial<IResponse<User>>): Promise<any>;
-  abstract deleteById(id: string): Promise<any>;
+  abstract getUserById(id: string): Promise<IResponse<Partial<User>>>;
+  abstract updateById(id: string, user: Partial<User>): Promise<IResponse<any>>;
+  abstract deleteById(id: string): Promise<IResponse<any>>;
 }

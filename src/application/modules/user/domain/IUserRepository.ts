@@ -2,8 +2,8 @@ import { User } from '../domain/entities/UserEntity';
 import { IResponse } from './IResponse';
 
 export interface IUserRepository {
-  create(user: User): Promise<any>;
-  getUserById(id: string): Promise<IResponse<User>>;
-  updateById(id: string, user: Partial<IResponse<User>>): Promise<any>;
-  deleteById(id: string): Promise<any>;
+  create(user: User): Promise<IResponse<any>>;
+  getUserById(id: string): Promise<IResponse<Partial<User>>>;
+  updateById(id: string, user: Partial<User>): Promise<IResponse<any>>;
+  deleteById(id: string): Promise<IResponse<any>>;
 }

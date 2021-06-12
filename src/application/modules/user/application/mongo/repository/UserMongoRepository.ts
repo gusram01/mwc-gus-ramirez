@@ -1,4 +1,4 @@
-import { Document, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { User } from '../../../domain/entities/UserEntity';
 import { IResponse } from '../../../domain/IResponse';
 import { RepositoryAdapter } from '../../../infraestructure/adapter/RepositoryAdapter';
@@ -16,7 +16,6 @@ export class UserMongoRepository extends RepositoryAdapter {
         return {
           success: true,
           data: userOrError,
-          error: null,
         };
       }
 
@@ -29,14 +28,13 @@ export class UserMongoRepository extends RepositoryAdapter {
     }
   }
   async create(user: User): Promise<IResponse<any>> {
-    const modelOrError = new this.mongooseModel(user) as Document<User>;
+    const modelDoc = new this.mongooseModel(user);
     try {
-      const saveOrError = await modelOrError.save();
-      if (!!saveOrError) {
+      const documentOrError = await modelDoc.save();
+      if (!!documentOrError) {
         return {
           success: true,
-          data: saveOrError,
-          error: null,
+          data: documentOrError.toObject(),
         };
       }
       throw new Error('Create error');
@@ -47,10 +45,50 @@ export class UserMongoRepository extends RepositoryAdapter {
       };
     }
   }
-  updateById(id: string, user: Partial<IResponse<User>>): Promise<any> {
-    throw new Error('Method not implemented.');
+  async updateById(id: string, user: Partial<User>): Promise<IResponse<any>> {
+    try {
+      const documentOrError = await this.mongooseModel.findByIdAndUpdate(
+        id,
+        user,
+        { new: true },
+      );
+
+      if (!!documentOrError) {
+        return {
+          success: true,
+          data: documentOrError.toObject(),
+        };
+      }
+
+      throw new Error('Update Error');
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
   }
-  deleteById(id: string): Promise<any> {
-    throw new Error('Method not implemented.');
+  async deleteById(id: string): Promise<any> {
+    try {
+      const userOrError = await this.mongooseModel.findById(id);
+
+      if (!userOrError) {
+        throw new Error('User not finded');
+      }
+
+      await userOrError.delete();
+
+      return {
+        success: true,
+        data: {
+          message: `User with id: ${userOrError._id} was erased`,
+        },
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
   }
 }

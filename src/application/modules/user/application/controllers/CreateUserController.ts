@@ -11,13 +11,16 @@ export class CreateUserController {
     const { name, email, username, password, gitlabUserId, countryId } =
       req.body;
 
+    const _id = new Types.ObjectId().toString();
+    const hashedPassword = await encrypter(password);
+
     const newUser = new User(
-      new Types.ObjectId().toString(),
+      _id,
       name,
       email,
       username,
       false,
-      await encrypter(password),
+      hashedPassword,
       gitlabUserId,
       countryId,
     );
