@@ -1,9 +1,10 @@
 import { GetUserController } from './GetUserController';
-import { GetUserUseCase } from '../../infraestructure/usecases/GetUser';
-import { UserRepository } from '../../infraestructure/repositories/UsersRespository';
+import { GetUserUseCase } from '../../domain/usecases/GetUserUseCase';
+import { UserMongoRepository } from '../../infraestructure/repositories/mongoRepository/UserMongoRepository';
+import { UserModel } from '../mongo';
 
-const userRepository = new UserRepository();
-const getUserUseCase = new GetUserUseCase(userRepository);
-const getUserController = new GetUserController(getUserUseCase);
+const userRepository = new UserMongoRepository(UserModel);
+const getUserMongoUseCase = new GetUserUseCase(userRepository);
+const getUserMongoController = new GetUserController(getUserMongoUseCase);
 
-export { getUserController };
+export { getUserMongoController };
