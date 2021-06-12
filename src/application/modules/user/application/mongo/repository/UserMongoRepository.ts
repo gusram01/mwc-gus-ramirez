@@ -1,10 +1,12 @@
 import { Model } from 'mongoose';
 import { User } from '../../../domain/entities/UserEntity';
 import { IResponse } from '../../../domain/IResponse';
-import { IUserRepository } from '../../../domain/IUserRepository';
+import { RepositoryAdapter } from '../../../infraestructure/adapter/RepositoryAdapter';
 
-export class UserMongoRepository implements IUserRepository {
-  constructor(private mongooseModel: Model<User>) {}
+export class UserMongoRepository extends RepositoryAdapter {
+  constructor(private mongooseModel: Model<User>) {
+    super();
+  }
 
   async getUserById(id: string): Promise<IResponse<User>> {
     try {
@@ -21,7 +23,7 @@ export class UserMongoRepository implements IUserRepository {
       throw new Error('Error getUserById');
     } catch (error: any) {
       return {
-        success: true,
+        success: false,
         error: error.message,
       };
     }
