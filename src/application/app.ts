@@ -1,11 +1,11 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import router from './router';
 
 const app = express();
+const port = process.env.PORT || 3000;
 
-app.get('/', (_: Request, res: Response) => {
-  res.send('Hellooouuu');
-});
+app.use('/user', router.user);
 
-app.listen(3000, () => {
-  console.log('Listen server');
+app.listen(port, () => {
+  console.log(`Server listen on port ${port}`);
 });

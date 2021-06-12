@@ -4,7 +4,7 @@
   "description": "reto backend hackathon nuwe mwc",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd src/application/app",
+    "dev": "tsnd -r dotenv/config src/application/app",
     "build": "tsc",
     "start": "node dist/application/app"
   },
