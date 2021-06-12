@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Document, Model } from 'mongoose';
 import { User } from '../../../domain/entities/UserEntity';
 import { IResponse } from '../../../domain/IResponse';
 import { RepositoryAdapter } from '../../../infraestructure/adapter/RepositoryAdapter';
@@ -20,7 +20,7 @@ export class UserMongoRepository extends RepositoryAdapter {
         };
       }
 
-      throw new Error('Error getUserById');
+      throw new Error('User not finded');
     } catch (error: any) {
       return {
         success: false,
@@ -28,8 +28,24 @@ export class UserMongoRepository extends RepositoryAdapter {
       };
     }
   }
-  create(user: User): Promise<any> {
-    throw new Error('Method not implemented.');
+  async create(user: User): Promise<IResponse<any>> {
+    const modelOrError = new this.mongooseModel(user) as Document<User>;
+    try {
+      const saveOrError = await modelOrError.save();
+      if (!!saveOrError) {
+        return {
+          success: true,
+          data: saveOrError,
+          error: null,
+        };
+      }
+      throw new Error('Create error');
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
   }
   updateById(id: string, user: Partial<IResponse<User>>): Promise<any> {
     throw new Error('Method not implemented.');

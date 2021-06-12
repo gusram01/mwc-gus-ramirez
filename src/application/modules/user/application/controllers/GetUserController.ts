@@ -7,6 +7,6 @@ export class GetUserController {
   async execute(req: Request, res: Response): Promise<any> {
     const response = await this.useCase.execute(req.params.id);
 
-    res.json(response);
+    return res.json(response);
   }
 }

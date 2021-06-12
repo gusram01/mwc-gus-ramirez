@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import { User } from '../../../domain/entities/UserEntity';
 
 const UserSchema = new Schema<User>({
-  id: String,
+  id: { type: Schema.Types.ObjectId },
   name: String,
   email: String,
   username: String,
