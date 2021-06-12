@@ -1,0 +1,25 @@
+{
+  "name": "mwc-gus-ramirez",
+  "version": "0.0.0",
+  "description": "reto backend hackathon nuwe mwc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gusram01/mwc-gus-ramirez.git"
+  },
+  "keywords": [
+    "reto",
+    "backend",
+    "hackathon",
+    "nuwe"
+  ],
+  "author": "Gus Ramírez <gram.io.dev@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gusram01/mwc-gus-ramirez/issues"
+  },
+  "homepage": "https://github.com/gusram01/mwc-gus-ramirez#readme"
+}
