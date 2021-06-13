@@ -1,4 +1,4 @@
-# Reto backeng Nuwe MWC
+# Reto backend Nuwe MWC
 
 ## Routes
 
@@ -9,6 +9,7 @@
 - GET/countries
 - POST/register
 - GET/login
+- GET/notification
 
 ##
 
