@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 import { User } from '../../domain/entities/UserEntity';
 import { CreateUserUseCase } from '../../domain/usecases/CreateUserUseCase';
 import { encrypter } from '../../../../utils/encrypter';
@@ -8,6 +9,14 @@ export class CreateUserController {
   constructor(private useCase: CreateUserUseCase) {}
 
   async execute(req: Request, res: Response) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        error: errors.array(),
+      });
+    }
     const { name, email, username, password, gitlabUserId, countryId } =
       req.body;
 
@@ -21,12 +30,12 @@ export class CreateUserController {
       username,
       false,
       hashedPassword,
-      gitlabUserId,
+      !!gitlabUserId ? gitlabUserId : '',
       countryId,
     );
 
     const response = await this.useCase.execute(newUser);
 
-    return res.json(response);
+    return res.status(201).json(response);
   }
 }

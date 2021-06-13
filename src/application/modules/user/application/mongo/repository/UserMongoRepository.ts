@@ -10,12 +10,12 @@ export class UserMongoRepository extends RepositoryAdapter {
 
   async getUserById(id: string): Promise<IResponse<User>> {
     try {
-      const userOrError = await this.mongooseModel.findById(id);
+      const documentOrError = await this.mongooseModel.findById(id);
 
-      if (!!userOrError) {
+      if (!!documentOrError) {
         return {
           success: true,
-          data: userOrError,
+          data: documentOrError.toObject(),
         };
       }
 
@@ -70,18 +70,18 @@ export class UserMongoRepository extends RepositoryAdapter {
   }
   async deleteById(id: string): Promise<any> {
     try {
-      const userOrError = await this.mongooseModel.findById(id);
+      const documentOrError = await this.mongooseModel.findById(id);
 
-      if (!userOrError) {
+      if (!documentOrError) {
         throw new Error('User not finded');
       }
 
-      await userOrError.delete();
+      await documentOrError.delete();
 
       return {
         success: true,
         data: {
-          message: `User with id: ${userOrError._id} was erased`,
+          message: `User with id: ${documentOrError._id} was erased`,
         },
       };
     } catch (error: any) {
