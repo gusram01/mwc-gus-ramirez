@@ -8,6 +8,10 @@ import { UpdateUserUseCase } from '../../domain/usecases/UpdateUserUseCase';
 import { UpdateUserController } from './UpdateUserController';
 import { DeleteUserUseCase } from '../../domain/usecases/DeleteUserUseCase';
 import { DeleteUserController } from './DeleteUserController';
+import { LoginUserUseCase } from '../../domain/usecases/LoginUseCase';
+import { LoginUserController } from './LoginUserController';
+import { RegisterUserUseCase } from '../../domain/usecases/RegisterUseCase';
+import { RegisterUserController } from './RegisterUserController';
 
 const userRepository = new UserMongoRepository(UserModel);
 
@@ -29,9 +33,19 @@ const deleteUserMongoController = new DeleteUserController(
   deleteUserMongoUseCase,
 );
 
+const loginUserMongoUseCase = new LoginUserUseCase(userRepository);
+const loginUserMongoController = new LoginUserController(loginUserMongoUseCase);
+
+const registerUserMongoUseCase = new RegisterUserUseCase(userRepository);
+const registerUserMongoController = new RegisterUserController(
+  registerUserMongoUseCase,
+);
+
 export {
   getUserMongoController,
   createUserMongoController,
   updateUserMongoController,
   deleteUserMongoController,
+  loginUserMongoController,
+  registerUserMongoController,
 };

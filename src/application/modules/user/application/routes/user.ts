@@ -32,8 +32,11 @@ router.post(
     },
     password: {
       in: ['body'],
-      errorMessage: 'password is required with at least 6 char',
-      isLength: { min: 6 },
+      errorMessage: 'password is required',
+      isLength: {
+        errorMessage: 'At least 6 chars',
+        options: { min: 6 },
+      },
     },
     countryId: {
       in: ['body'],

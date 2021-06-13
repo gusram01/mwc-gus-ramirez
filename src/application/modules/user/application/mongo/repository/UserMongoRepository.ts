@@ -8,6 +8,53 @@ export class UserMongoRepository extends RepositoryAdapter {
     super();
   }
 
+  async register(user: Partial<User>): Promise<IResponse<Partial<User>>> {
+    const modelDoc = new this.mongooseModel(user);
+    try {
+      const documentOrError = await modelDoc.save();
+      if (!!documentOrError) {
+        return {
+          success: true,
+          data: documentOrError.toObject(),
+        };
+      }
+      throw new Error('Create error');
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+  }
+
+  async login(user: Partial<User>): Promise<IResponse<Partial<User>>> {
+    const search: any = {};
+    if (user.email !== null && typeof user.email !== 'undefined') {
+      search.email = user.email;
+    }
+    if (user.username !== null && typeof user.username !== 'undefined') {
+      search.username = user.username;
+    }
+
+    try {
+      const documentOrError = await this.mongooseModel.findOne(search);
+
+      if (!!documentOrError) {
+        return {
+          success: true,
+          data: documentOrError,
+        };
+      }
+
+      throw new Error('Verify username or password');
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+  }
+
   async getUserById(id: string): Promise<IResponse<User>> {
     try {
       const documentOrError = await this.mongooseModel.findById(id);
