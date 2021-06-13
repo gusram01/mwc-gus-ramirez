@@ -10,6 +10,7 @@ app.use(helmet());
 app.use(express.json());
 
 app.use('/user', router.user);
+app.use('/countries', router.country);
 
 app.listen(port, () => {
   console.log(`Server listen on port ${port}`);

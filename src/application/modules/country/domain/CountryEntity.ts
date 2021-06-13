@@ -1,4 +1,4 @@
-export class Country {
+export class CountryEntity {
   constructor(
     public id: string,
     public name: string,
