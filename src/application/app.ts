@@ -12,6 +12,7 @@ app.use(express.json());
 app.use('/', router.auth);
 app.use('/user', router.user);
 app.use('/countries', router.country);
+app.use('/notification', router.mail);
 
 app.listen(port, () => {
   console.log(`Server listen on port ${port}`);
